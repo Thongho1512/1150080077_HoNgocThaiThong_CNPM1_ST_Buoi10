@@ -1,9 +1,0 @@
-D:\SOFTWARETESTING\buoi10\api-testing-assignment\src\test\java\com\testing\assignment\base\ApiBaseTest.java
-D:\SOFTWARETESTING\buoi10\api-testing-assignment\src\test\java\com\testing\assignment\models\CreateUserRequest.java
-D:\SOFTWARETESTING\buoi10\api-testing-assignment\src\test\java\com\testing\assignment\models\UserResponse.java
-D:\SOFTWARETESTING\buoi10\api-testing-assignment\src\test\java\com\testing\assignment\tests\ApiUiIntegrationTests.java
-D:\SOFTWARETESTING\buoi10\api-testing-assignment\src\test\java\com\testing\assignment\tests\AuthTests.java
-D:\SOFTWARETESTING\buoi10\api-testing-assignment\src\test\java\com\testing\assignment\tests\CrudTests.java
-D:\SOFTWARETESTING\buoi10\api-testing-assignment\src\test\java\com\testing\assignment\tests\GetTests.java
-D:\SOFTWARETESTING\buoi10\api-testing-assignment\src\test\java\com\testing\assignment\tests\PerformanceTests.java
-D:\SOFTWARETESTING\buoi10\api-testing-assignment\src\test\java\com\testing\assignment\tests\SchemaValidationTests.java
