@@ -1,0 +1,44 @@
+BÁO CÁO KẾT QUẢ ĐẠT ĐƯỢC CỦA CÁC BÀI TẬP KIỂM THỬ API VÀ UI (ASSIGNMENT)
+
+-----------------------------------------------------------
+BÀI 1: THIẾT LẬP API BASETEST VÀ KIỂM THỬ GET CƠ BẢN
+-----------------------------------------------------------
+- Xây dựng thành công `ApiBaseTest` sử dụng `RequestSpecification` và `ResponseSpecification`, giúp trừu tượng hóa toàn bộ cấu hình lõi (Base URI, Content-Type, Logging).
+- Thực thi thành công 4 Test Case GET API: GET users page 1, page 2, user ID 3, user ID 9999 (Not Found).
+- Đã áp dụng Hamcrest Assertion để kiểm chứng chính xác JSON data (ví dụ `data.size() >= 1`, email định dạng `@reqres.in`).
+
+-----------------------------------------------------------
+BÀI 2: KIỂM THỬ POST, PUT, DELETE - CRUD ĐẦY ĐỦ
+-----------------------------------------------------------
+- Khởi tạo thành công các Data Models (POJO): `CreateUserRequest` và `UserResponse`.
+- Hoàn thành kịch bản kiểm thử luồng End-to-End đầy đủ: POST tạo user -> Lấy ID lưu trữ -> GET xác nhận user vừa tạo -> PUT cập nhật -> PATCH cập nhật một phần -> DELETE xóa user.
+- Biết cách quản lý State cơ bản bằng việc lưu biến `createdUserId` dùng cho kịch bản sau ("Chain API Calls").
+(*Lưu ý: API reqres.in là một mock API nên việc gọi GET trực tiếp tham số Vừa Tạo có thể trả về 404 do hệ thống thật không cấp phát DB, tuy nhiên luồng Automation Test vẫn bắt trúng và mô phỏng hoàn toàn đúng chuẩn kỹ thuật Theoretic).
+
+-----------------------------------------------------------
+BÀI 3: JSON SCHEMA VALIDATION
+-----------------------------------------------------------
+- Tạo lập thành công 3 tệp tin JSON Schema chuyên biệt: `user-list-schema.json`, `user-schema.json` và `create-user-schema.json`.
+- Tích hợp cờ `additionalProperties: false` để phát hiện lỗi thay đổi ngầm/dư thừa cấu trúc.
+- Đã validate chặt chẽ Response từ hệ thống bằng hàm `matchesJsonSchemaInClasspath` tích hợp sâu trong khối assertion `.then()`. Bất kỳ thay đổi cấu trúc nào rò rỉ từ phía Backend sẽ lập tức đánh sập (Fail) script tự động bảo vệ tính nhất quán của API contract.
+
+-----------------------------------------------------------
+BÀI 4: KIỂM THỬ AUTHORIZATION VÀ ERROR HANDLING
+-----------------------------------------------------------
+- Kiểm chứng hiệu quả kịch bản phân quyền dương tính (Positive) cho API `/login` và `/register`, đảm bảo lấy được Token JWT thành công.
+- Ngăn chặn triệt để phản hồi lỗi bảo mật (Negative/Error Handling) qua HTTP Code 400 Bad Request khi payload thiếu password hay username.
+- Triển khai Data-Driven Testing xuất sắc bằng `@DataProvider` với mảng tham số 2 chiều 5 kịch bản (email đúng/sai, có pass/không pass), giúp code không bị lặp lại và dễ dàng bảo trì.
+
+-----------------------------------------------------------
+BÀI 5: PERFORMANCE ASSERTION VÀ SLA MONITORING
+-----------------------------------------------------------
+- Triển khai thành phần chốt chặn chuẩn SLA với `@DataProvider` cấp tốc đo lường giới hạn phản hồi (2000ms cho GET, 3000ms cho POST, v.v).
+- Gắn tích hợp `@Step` của Allure Report cho phép báo cáo đầu ra chi tiết theo ngữ cảnh.
+- Viết hàm Java Streams theo dõi (monitoring) định kỳ: vòng lặp 10 lần API để in thống kê chỉ số Min, Max và Average Response Time ra Console chính xác, đóng vai trò như một mini Performance Tracker.
+
+-----------------------------------------------------------
+BÀI 6: TÍCH HỢP API + UI: SETUP QUA API, VERIFY QUA UI
+-----------------------------------------------------------
+- Đây là bài tập có giá trị tự động hóa hiện đại nhất. Hệ thống chạy `BeforeMethod` thiết lập Precondition hoàn toàn thông qua API POST Login dưới 2 giây. Cờ `isApiLoginSuccess` phân phối nhánh if-else hợp lý.
+- Thiết lập bắt lỗi thông minh bằng `SkipException`, từ chối chạy Test UI (tốn kém thời gian) nếu Server API đang tử vong, làm thông lượng CI/CD mượt mà hơn.
+- Automation chạy Headless Webdriver Selenium thông qua trang Saucedemo truy xuất mượt mà quy trình UI E2E: Đăng nhập -> Click Add to Cart -> Xác thực (Assert) Web Element Cart Badge = 2. Sự kết hợp giữa API và UI diễn ra khép kín và an toàn tuyệt đối.

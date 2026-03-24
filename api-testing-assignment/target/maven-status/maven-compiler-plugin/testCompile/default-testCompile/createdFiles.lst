@@ -1,0 +1,9 @@
+com\testing\assignment\tests\GetTests.class
+com\testing\assignment\tests\ApiUiIntegrationTests.class
+com\testing\assignment\tests\PerformanceTests.class
+com\testing\assignment\tests\SchemaValidationTests.class
+com\testing\assignment\base\ApiBaseTest.class
+com\testing\assignment\tests\AuthTests.class
+com\testing\assignment\tests\CrudTests.class
+com\testing\assignment\models\CreateUserRequest.class
+com\testing\assignment\models\UserResponse.class
